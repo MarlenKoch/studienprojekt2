@@ -279,3 +279,4 @@ static/media/
 # Documentation build
 docs/_build/
 site/
+backend/datenbank/__pycache__/__init__.cpython-313.pyc
