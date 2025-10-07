@@ -31,7 +31,7 @@ class DateiResponse(BaseModel):
     modul: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Notiz
@@ -54,7 +54,7 @@ class NotizResponse(BaseModel):
     reihenfolgeKiAntworten: List[Any] = Field(default_factory=list)
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # KiAntwort
@@ -80,7 +80,7 @@ class KiAntwortResponse(BaseModel):
     notiz_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # QuizSession
@@ -97,7 +97,7 @@ class QuizSessionResponse(BaseModel):
     titel: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # QuizFrage
@@ -123,4 +123,4 @@ class QuizFrageResponse(BaseModel):
     quiz_session_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

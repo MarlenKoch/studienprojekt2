@@ -31,7 +31,7 @@ class Notiz(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     titel = Column(String, index=True, nullable=False)
-    labels = Column(JSON, nullable=False, nullable=False)
+    labels = Column(JSON, nullable=False)
     reihenfolgeKiAntworten = Column(JSON, nullable=False, default=list)
 
     kiAntworten = relationship("KiAntwort", back_populates="notiz", cascade="all, delete-orphan")
@@ -74,8 +74,3 @@ class QuizFrage(Base):
 
     quiz_session_id = Column(Integer, ForeignKey("quizSessions.id"), nullable=False, index=True)
     quiz_session = relationship("QuizSession", back_populates="fragen")
-    
-    
-
-
-

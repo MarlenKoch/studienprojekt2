@@ -1,14 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from datenbank import get_db
-from crud import (
+from ..datenbank import get_db
+from ..crud import (
     create_datei,
     get_datei,
     get_dateien,
     update_datei,
     delete_datei,
+    get_notizen_fuer_datei,
+    get_quiz_sessions_fuer_datei,
 )
-from pydanticModelle import DateiCreate, DateiResponse, DateiUpdate
+from ..pydanticModelle import DateiCreate, DateiResponse, DateiUpdate, NotizResponse, QuizSessionResponse
 
 
 router = APIRouter()
@@ -41,3 +43,11 @@ def delete_datei_endpoint(datei_id: int, db: Session = Depends(get_db)):
     if not deleted:
         raise HTTPException(status_code=404, detail="Datei nicht gefunden")
     return deleted
+
+@router.get("/{datei_id}/notizen", response_model=list[NotizResponse])
+def get_notizen_fuer_datei_endpoint(datei_id: int, db: Session = Depends(get_db)):
+    return get_notizen_fuer_datei(db, datei_id)
+
+@router.get("/{datei_id}/quiz-sessions", response_model=list[QuizSessionResponse])
+def get_quiz_sessions_fuer_datei_endpoint(datei_id: int, db: Session = Depends(get_db)):
+    return get_quiz_sessions_fuer_datei(db, datei_id)

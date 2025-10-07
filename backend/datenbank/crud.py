@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from classModelsForDB import Datei, Notiz, KiAntwort, QuizSession, QuizFrage
-from dbSchemas import (
+from .modelle import Datei, Notiz, KiAntwort, QuizSession, QuizFrage
+from .pydanticModelle import (
     DateiCreate, DateiUpdate,
     NotizCreate, NotizUpdate,
     KiAntwortCreate, KiAntwortUpdate,
@@ -238,10 +238,41 @@ def unlink_datei_von_notiz(db: Session, notizId: int, dateiId: int):
 # Ki-Antworten zu einer Notiz
 def get_kiantworten_fuer_notiz(db: Session, notizId: int):
     notiz = get_notiz(db, notizId)
-    return notiz.antworten if notiz else []
+    return notiz.kiAntworten if notiz else []
 
 
 # Quiz-Fragen zu einer Quiz-Session
 def get_quiz_fragen_fuer_session(db: Session, quizSessionId: int):
     qs = get_quiz_session(db, quizSessionId)
     return qs.fragen if qs else []
+
+# QuizSession <-> Datei (Many-to-Many)
+def get_dateien_fuer_quiz_session(db: Session, quizSessionId: int):
+    qs = get_quiz_session(db, quizSessionId)
+    return qs.dateien if qs else []
+
+def get_quiz_sessions_fuer_datei(db: Session, dateiId: int):
+    datei = get_datei(db, dateiId)
+    return datei.quiz_sessions if datei else []
+
+def link_datei_zu_quiz_session(db: Session, quizSessionId: int, dateiId: int):
+    qs = get_quiz_session(db, quizSessionId)
+    datei = get_datei(db, dateiId)
+    if not qs or not datei:
+        return None
+    if datei not in qs.dateien:
+        qs.dateien.append(datei)
+        db.commit()
+        db.refresh(qs)
+    return qs
+
+def unlink_datei_von_quiz_session(db: Session, quizSessionId: int, dateiId: int):
+    qs = get_quiz_session(db, quizSessionId)
+    datei = get_datei(db, dateiId)
+    if not qs or not datei:
+        return None
+    if datei in qs.dateien:
+        qs.dateien.remove(datei)
+        db.commit()
+        db.refresh(qs)
+    return qs
