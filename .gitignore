@@ -279,14 +279,3 @@ static/media/
 # Documentation build
 docs/_build/
 site/
-backend/datenbank/__pycache__/crud.cpython-313.pyc
-backend/datenbank/__pycache__/crud.cpython-313.pyc
-backend/datenbank/__pycache__/crud.cpython-313.pyc
-backend/datenbank/__pycache__/datenbank.cpython-313.pyc
-backend/datenbank/router/__pycache__/kiAntwort.cpython-313.pyc
-backend/datenbank/router/__pycache__/kiAntwort.cpython-313.pyc
-backend/datenbank/__pycache__/datenbank.cpython-313.pyc
-backend/datenbank/__pycache__/modelle.cpython-313.pyc
-backend/datenbank/__pycache__/pydanticModelle.cpython-313.pyc
-backend/datenbank/router/__pycache__/kiAntwort.cpython-313.pyc
-backend/datenbank/router/__pycache__/notizen.cpython-313.pyc
